@@ -101,6 +101,7 @@ class Bird {
         this.jump = 2.0; // tuned by hit and trial
         this.speed = 0;
         this.rotation = 0;
+        this.radius = 12;
     }
 
     draw = () => {
@@ -123,7 +124,6 @@ class Bird {
 
         if (gameState.current === gameState.getReady) { // if gameState ready reset the bird position and speed
             this.y = canvas.height / 2 - 50;
-            this.speed = 0;
             this.rotation = 0 * Math.PI / 180;
         }
         else {
@@ -156,7 +156,7 @@ class Bird {
 class Pipes {
     constructor() {
         this.position = []; // stores x position of the pipes
-        this.topPipe = { sX: 553, sY: 0}; // coordiante of top pipe in the sprite
+        this.topPipe = { sX: 553, sY: 0 }; // coordiante of top pipe in the sprite
         this.bottomPipe = { sX: 502, sY: 0}; // coordiante of bottom pipe in the sprite
         this.w = 53;
         this.h = 400;
@@ -196,11 +196,69 @@ class Pipes {
         }
     }
 
-    // move pipes
+    checkCollision = (p) => {
+        if (gameState.current !== gameState.game) return;
+        let bottomPipeYPosition = p.y + this.h + this.gap;
+        return (
+            ( // check for top pipe
+                bird.x + bird.radius > p.x &&
+                bird.x - bird.radius < p.x + this.w &&
+                bird.y + bird.radius > p.y &&
+                bird.y - bird.radius < p.y + this.h
+            ) ||
+            ( // check for bottom pipe
+                bird.x + bird.radius > p.x &&
+                bird.x - bird.radius < p.x + this.w &&
+                bird.y + bird.radius > bottomPipeYPosition &&
+                bird.y - bird.radius < bottomPipeYPosition + this.h
+            )
+        );
+    }
+
+    // move and deletes pipes if crossed left of canvas
     update = () => {
+        if (gameState.current !== gameState.game) return;
         for (let i = 0; i < this.position.length; i++) {
             let p = this.position[i];
-            p.x -= this.dx;
+
+            // Collision resolution
+            if (this.checkCollision(p)) {
+                gameState.current = gameState.gameOver;
+            }
+
+            p.x -= this.dx; // move pipe to the left
+
+            if (p.x + this.w <= 0) { // if pipe crossed left of viewport
+                this.position.shift(); // shits array to the left by 1. basically deletes first element
+                scoreBoard.currentScore++;
+                scoreBoard.highScore = Math.max(scoreBoard.currentScore, scoreBoard.highScore);
+                localStorage.setItem('highScore', scoreBoard.highScore);
+            }
+        }
+    }
+}
+
+class ScoreBoard {
+    constructor() {
+        this.highScore = parseInt(localStorage.getItem('highScore')) || 0;
+        this.currentScore = 0;
+    }
+
+    draw = () => {
+        ctx.fillStyle = 'white';
+
+        if (gameState.current === gameState.game) {
+            ctx.lineWidth = 2;
+            ctx.font = '35px Teko';
+            ctx.fillText(this.currentScore, canvas.width/2, 50);
+            ctx.strokeText(this.currentScore, canvas.width/2, 50);
+        }
+        else if (gameState.current === gameState.gameOver) {
+            ctx.font = '25px Teko';
+            ctx.fillText(this.currentScore,  460, 175);
+            ctx.strokeText(this.currentScore, 460, 175);
+            ctx.fillText(this.highScore, 465, 215);
+            ctx.strokeText(this.highScore, 465, 215);
         }
     }
 }

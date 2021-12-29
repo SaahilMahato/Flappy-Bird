@@ -16,6 +16,7 @@ const getReady = new GetReady();
 const gameOver = new GameOver();
 const bird = new Bird();
 const pipes = new Pipes();
+const scoreBoard = new ScoreBoard();
 
 // control game state
 const gameState = {
@@ -29,6 +30,9 @@ canvas.addEventListener('click', (e) => {
     switch (gameState.current) {
         case gameState.getReady:
             gameState.current = gameState.game;
+            bird.speed = 0;
+            pipes.position = [];
+            scoreBoard.currentScore = 0;
             break;
         case gameState.game:
             bird.flap();
@@ -45,9 +49,10 @@ const draw = () => {
     backGround.draw();
     foreGround.draw();
     getReady.draw();
-    gameOver.draw();
     bird.draw();
     pipes.draw();
+    gameOver.draw();
+    scoreBoard.draw();
 }
 
 const update = () => {
