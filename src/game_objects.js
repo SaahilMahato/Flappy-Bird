@@ -99,10 +99,10 @@ class Bird {
         this.imageFrame = 0;
         this.gravity = 0.07; // tuned by hit and trial
         this.jump = 2.5; // tuned by hit and trial
-        this.speed = 0;
+        this.speed = 0; // speed at which the bird moves. gradually increases while falling
         this.rotation = 0;
         this.radius = 12;
-        this.fallAngle = 1;
+        this.fallAngle = 1; // angle when bird is falling. gradually increases on update
     }
 
     draw = () => {
@@ -118,8 +118,8 @@ class Bird {
 
     update = () => {
         // flapTime means the number of frames it takes before the bird flaps its wings
-        if (gameState.current === gameState.game)
-            this.flapTime = 25; // set flapTime based on game state
+        if (gameState.current === gameState.game) // set flapTime based on game state
+            this.flapTime = 25; 
         else 
             this.flapTime = 0;
 
