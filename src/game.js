@@ -15,6 +15,7 @@ const foreGround = new ForeGround();
 const getReady = new GetReady();
 const gameOver = new GameOver();
 const bird = new Bird();
+const pipes = new Pipes();
 
 // control game state
 const gameState = {
@@ -46,11 +47,14 @@ const draw = () => {
     getReady.draw();
     gameOver.draw();
     bird.draw();
+    pipes.draw();
 }
 
 const update = () => {
     bird.update();
     foreGround.update();
+    pipes.spawn();
+    pipes.update();
 }
 
 const gameLoop = () => {

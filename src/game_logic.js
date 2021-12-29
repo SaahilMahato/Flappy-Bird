@@ -97,7 +97,7 @@ class Bird {
         this.w = 34;
         this.h = 26;
         this.imageFrame = 0;
-        this.gravity = 0.1; // tuned by hit and trial
+        this.gravity = 0.05; // tuned by hit and trial
         this.jump = 2.0; // tuned by hit and trial
         this.speed = 0;
         this.rotation = 0;
@@ -155,20 +155,52 @@ class Bird {
 
 class Pipes {
     constructor() {
-        this.topPipe = { sX: 553, sY: 0};
-        this.bottomPipe = { sX: 502, sY: 0};
+        this.position = []; // stores x position of the pipes
+        this.topPipe = { sX: 553, sY: 0}; // coordiante of top pipe in the sprite
+        this.bottomPipe = { sX: 502, sY: 0}; // coordiante of bottom pipe in the sprite
         this.w = 53;
         this.h = 400;
-        this.gap = 85;
-        this.dx = 2;
-        this.maxYPosition = -150;
+        this.gap = 150; // gap between top pipe and bottom pipe 
+        this.dx = 2; // speed of pipe
+        this.minYPosition = -150; // minimum y position of top pipe
     }
 
     draw = () => {
+        for (let i=0; i < this.position.length; i++) { // loop over positions
+            let p = this.position[i];
 
+            let topYPosition = p.y; // postion of top pipe
+            let bottomYPosition = p.y + this.h + this.gap; // position of bottom pipe = length of top pipe + gap
+
+            // draw top tipe
+            ctx.drawImage(sprite, this.topPipe.sX, this.topPipe.sY,
+                this.w, this.h, p.x, 
+                topYPosition, this.w, this.h);
+
+            // draw bottom tipe
+            ctx.drawImage(sprite, this.bottomPipe.sX, this.bottomPipe.sY,
+                this.w, this.h, p.x, 
+                bottomYPosition, this.w, this.h);
+        }
     }
 
-    update = () => {
+    // spawn pipes
+    spawn = () => {
+        if (gameState.current !== gameState.game) return; // if not game state then dont spawn
 
+        if (frames % 100 === 0) { // spawn every 100 frame
+            this.position.push({
+                x: canvas.width, // spawn at  right side of canvas
+                y: this.minYPosition * (Math.random() + 1) // randomly generate y position
+            });
+        }
+    }
+
+    // move pipes
+    update = () => {
+        for (let i = 0; i < this.position.length; i++) {
+            let p = this.position[i];
+            p.x -= this.dx;
+        }
     }
 }
