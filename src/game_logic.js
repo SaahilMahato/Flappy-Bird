@@ -3,8 +3,8 @@
 
 class BackGround {
     constructor() {
-        this.sX = 0;
-        this.sY = 0;
+        this.spriteX = 0;
+        this.spriteY = 0;
         this.w = 275;
         this.h = 226;
         this.x = 0;
@@ -14,15 +14,15 @@ class BackGround {
     draw = () => {
         // repeatedly draw to fill the viewport
         for (let i = 0; i < 3; i++)
-            ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x + i * this.w, 
+            ctx.drawImage(sprite, this.spriteX, this.spriteY, this.w, this.h, this.x + i * this.w, 
                 this.y, this.w, this.h);
     }
 }
 
 class ForeGround {
     constructor() {
-        this.sX = 276;
-        this.sY = 0;
+        this.spriteX = 276;
+        this.spriteY = 0;
         this.w = 224;
         this.h = 112;
         this.x = 0;
@@ -33,7 +33,7 @@ class ForeGround {
     draw = () => {
         // repeatedly draw to fill the viewport
         for (let i = 0; i < 4; i++)
-            ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x + i * this.w, 
+            ctx.drawImage(sprite, this.spriteX, this.spriteY, this.w, this.h, this.x + i * this.w, 
                 this.y, this.w, this.h);
 
     }
@@ -47,8 +47,8 @@ class ForeGround {
 
 class GetReady {
     constructor() {
-        this.sX = 0;
-        this.sY = 228;
+        this.spriteX = 0;
+        this.spriteY = 228;
         this.w = 173;
         this.h = 152;
         this.x = canvas.width/2 - 173/2;
@@ -57,15 +57,15 @@ class GetReady {
 
     draw = () => {
         if (gameState.current === gameState.getReady)
-            ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, 
+            ctx.drawImage(sprite, this.spriteX, this.spriteY, this.w, this.h, this.x, 
                 this.y, this.w, this.h);
     }
 }
 
 class GameOver {
     constructor() {
-        this.sX = 175;
-        this.sY = 228;
+        this.spriteX = 175;
+        this.spriteY = 228;
         this.w = 225;
         this.h = 202;
         this.x = canvas.width/2 - 225/2;
@@ -74,7 +74,7 @@ class GameOver {
 
     draw = () => {
         if (gameState.current === gameState.gameOver)
-            ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, 
+            ctx.drawImage(sprite, this.spriteX, this.spriteY, this.w, this.h, this.x, 
                 this.y, this.w, this.h);
     }
 }
@@ -87,10 +87,10 @@ class Bird {
            bird by reversing the images back and forth */
 
         this.animationArray = [
-            { sX: 276, sY: 112 },
-            { sX: 276, sY: 139 },
-            { sX: 276, sY: 164 },
-            { sX: 276, sY: 139 },
+            { spriteX: 276, spriteY: 112 },
+            { spriteX: 276, spriteY: 139 },
+            { spriteX: 276, spriteY: 164 },
+            { spriteX: 276, spriteY: 139 },
         ],
         this.x = 50;
         this.y = canvas.height / 2 - 50;
@@ -109,7 +109,7 @@ class Bird {
         ctx.save(); // save context state
         ctx.translate(this.x, this.y); // translate context to postion of the bird
         ctx.rotate(this.rotation); // rotate context
-        ctx.drawImage(sprite, birdState.sX, birdState.sY,
+        ctx.drawImage(sprite, birdState.spriteX, birdState.spriteY,
             this.w, this.h, - this.w/2, 
             - this.h/2, this.w, this.h);
         ctx.restore(); // restore context state
@@ -161,8 +161,8 @@ class Bird {
 class Pipes {
     constructor() {
         this.position = []; // stores x position of the pipes
-        this.topPipe = { sX: 553, sY: 0 }; // coordiante of top pipe in the sprite
-        this.bottomPipe = { sX: 502, sY: 0}; // coordiante of bottom pipe in the sprite
+        this.topPipe = { spriteX: 553, spriteY: 0 }; // coordiante of top pipe in the sprite
+        this.bottomPipe = { spriteX: 502, spriteY: 0}; // coordiante of bottom pipe in the sprite
         this.w = 53;
         this.h = 400;
         this.gap = 150; // gap between top pipe and bottom pipe 
@@ -178,12 +178,12 @@ class Pipes {
             let bottomYPosition = p.y + this.h + this.gap; // position of bottom pipe = length of top pipe + gap
 
             // draw top tipe
-            ctx.drawImage(sprite, this.topPipe.sX, this.topPipe.sY,
+            ctx.drawImage(sprite, this.topPipe.spriteX, this.topPipe.spriteY,
                 this.w, this.h, p.x, 
                 topYPosition, this.w, this.h);
 
             // draw bottom tipe
-            ctx.drawImage(sprite, this.bottomPipe.sX, this.bottomPipe.sY,
+            ctx.drawImage(sprite, this.bottomPipe.spriteX, this.bottomPipe.spriteY,
                 this.w, this.h, p.x, 
                 bottomYPosition, this.w, this.h);
         }

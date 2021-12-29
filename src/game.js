@@ -47,10 +47,10 @@ const draw = () => {
     ctx.fillStyle = 'skyblue';
     ctx.fillRect(0, 0, canvas.clientWidth, canvas.height);
     backGround.draw();
-    foreGround.draw();
-    getReady.draw();
-    bird.draw();
     pipes.draw();
+    foreGround.draw();
+    bird.draw();
+    getReady.draw();
     gameOver.draw();
     scoreBoard.draw();
 }
