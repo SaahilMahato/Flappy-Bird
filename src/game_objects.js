@@ -102,6 +102,7 @@ class Bird {
         this.speed = 0;
         this.rotation = 0;
         this.radius = 12;
+        this.fallAngle = 1;
     }
 
     draw = () => {
@@ -138,11 +139,13 @@ class Bird {
             }
 
             if (this.speed >= this.jump) {
-                this.rotation = 90 * Math.PI / 180; // Math.PI / 180 coverts to degrees
+                this.rotation = this.fallAngle * Math.PI / 180; // Math.PI / 180 coverts to degrees
                 this.frame = 1;
+                if (this.fallAngle < 90) this.fallAngle += 2;
             }
             else {
                 this.rotation = -45 * Math.PI / 180; // Math.PI / 180 coverts to degrees
+                this.fallAngle = 1;
             }
         }
     }
@@ -155,6 +158,7 @@ class Bird {
     // reset attributes after game over
     reset = () => {
         this.speed = 0;
+        this.fallAngle = 1;
     }
 }
 
@@ -235,9 +239,9 @@ class Pipes {
 
             if (p.x + this.width <= 0) { // if pipe crossed left of viewport
                 this.position.shift(); // shits array to the left by 1. basically deletes first element
-                scoreBoard.currentScore++;
-                scoreBoard.highScore = Math.max(scoreBoard.currentScore, scoreBoard.highScore);
-                localStorage.setItem('highScore', scoreBoard.highScore);
+                scoreBoard.currentScore++; // increase score if pipe is deleted
+                scoreBoard.highScore = Math.max(scoreBoard.currentScore, scoreBoard.highScore); // set high score to max of current score and high score
+                localStorage.setItem('highScore', scoreBoard.highScore); // save high score to local storage
             }
         }
     }
@@ -250,7 +254,7 @@ class Pipes {
 
 class ScoreBoard {
     constructor() {
-        this.highScore = parseInt(localStorage.getItem('highScore')) || 0;
+        this.highScore = parseInt(localStorage.getItem('highScore')) || 0; // Try getting score from local storage if not set to 0
         this.currentScore = 0;
     }
 
@@ -258,12 +262,12 @@ class ScoreBoard {
         ctx.fillStyle = 'white';
 
         if (gameState.current === gameState.game) {
-            ctx.font = '35px comic-sans';
+            ctx.font = '48px comic-sans';
             ctx.fillText('SCORE: ' + this.currentScore, canvas.width/2 -100, 50); // apply text
             ctx.strokeText('SCORE: ' + this.currentScore, canvas.width/2 -100, 50); // apply text style
         }
         else if (gameState.current === gameState.gameOver) {
-            ctx.font = '25px comic-sans';
+            ctx.font = '26px comic-sans';
             ctx.fillText(this.currentScore,  460, 175);
             ctx.strokeText(this.currentScore, 460, 175);
             ctx.fillText(this.highScore, 465, 215);
