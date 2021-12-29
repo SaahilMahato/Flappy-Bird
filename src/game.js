@@ -50,6 +50,7 @@ const draw = () => {
 
 const update = () => {
     bird.update();
+    foreGround.update();
 }
 
 const gameLoop = () => {

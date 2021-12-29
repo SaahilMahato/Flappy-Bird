@@ -27,6 +27,7 @@ class ForeGround {
         this.h = 112;
         this.x = 0;
         this.y = canvas.height - 112;
+        this.dx = 2;
     }
 
     draw = () => {
@@ -35,6 +36,12 @@ class ForeGround {
             ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x + i * this.w, 
                 this.y, this.w, this.h);
 
+    }
+
+    update = () => {
+        if (gameState.current === gameState.game) {
+            this.x = (this.x - this.dx) % (this.w / 2); // restore foreground position after
+        }
     }
 }
 
@@ -93,13 +100,18 @@ class Bird {
         this.gravity = 0.1; // tuned by hit and trial
         this.jump = 2.0; // tuned by hit and trial
         this.speed = 0;
+        this.rotation = 0;
     }
 
     draw = () => {
         let birdState = this.animationArray[this.imageFrame]; // change bird image based on frame to animate
+        ctx.save(); // save context state
+        ctx.translate(this.x, this.y); // translate context to postion of the bird
+        ctx.rotate(this.rotation); // rotate context
         ctx.drawImage(sprite, birdState.sX, birdState.sY,
-            this.w, this.h, this.x - this.w/2, 
-            this.y - this.h/2, this.w, this.h);
+            this.w, this.h, - this.w/2, 
+            - this.h/2, this.w, this.h);
+        ctx.restore(); // restore context state
     }
 
     update = () => {
@@ -109,9 +121,10 @@ class Bird {
             this.imageFrame += 1
         this.imageFrame = this.imageFrame % this.animationArray.length; // make sure imageFrame never exceeds animation array index
 
-        if (gameState.current === gameState.getReady) { // if gameState rady reset the bird position and speed
+        if (gameState.current === gameState.getReady) { // if gameState ready reset the bird position and speed
             this.y = canvas.height / 2 - 50;
             this.speed = 0;
+            this.rotation = 0 * Math.PI / 180;
         }
         else {
             this.speed += this.gravity; // increment speed by gravity per frame
@@ -124,10 +137,38 @@ class Bird {
                 }
             }
 
+            if (this.speed >= this.jump) {
+                this.rotation = 90 * Math.PI / 180; // Math.PI / 180 coverts to degrees
+                this.frame = 1;
+            }
+            else {
+                this.rotation = -45 * Math.PI / 180; // Math.PI / 180 coverts to degrees
+            }
         }
     }
 
     flap = () => {
+        // decreasing speed makes the bird move upward since y will be negative
         this.speed = - this.jump;
+    }
+}
+
+class Pipes {
+    constructor() {
+        this.topPipe = { sX: 553, sY: 0};
+        this.bottomPipe = { sX: 502, sY: 0};
+        this.w = 53;
+        this.h = 400;
+        this.gap = 85;
+        this.dx = 2;
+        this.maxYPosition = -150;
+    }
+
+    draw = () => {
+
+    }
+
+    update = () => {
+
     }
 }
