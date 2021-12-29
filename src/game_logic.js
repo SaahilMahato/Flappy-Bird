@@ -151,6 +151,11 @@ class Bird {
         // decreasing speed makes the bird move upward since y will be negative
         this.speed = - this.jump;
     }
+
+    // reset attributes after game over
+    reset = () => {
+        this.speed = 0;
+    }
 }
 
 class Pipes {
@@ -236,6 +241,11 @@ class Pipes {
             }
         }
     }
+
+    // reset attributes after game over
+    reset = () => {
+        this.position = [];
+    }
 }
 
 class ScoreBoard {
@@ -260,5 +270,10 @@ class ScoreBoard {
             ctx.fillText(this.highScore, 465, 215);
             ctx.strokeText(this.highScore, 465, 215);
         }
+    }
+
+    // reset attributes after game over
+    reset = () => {
+        this.currentScore = 0;
     }
 }

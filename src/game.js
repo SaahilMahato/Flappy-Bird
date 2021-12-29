@@ -30,14 +30,14 @@ canvas.addEventListener('click', (e) => {
     switch (gameState.current) {
         case gameState.getReady:
             gameState.current = gameState.game;
-            bird.speed = 0;
-            pipes.position = [];
-            scoreBoard.currentScore = 0;
             break;
         case gameState.game:
             bird.flap();
             break;
         case gameState.gameOver:
+            pipes.reset();
+            bird.reset();
+            scoreBoard.reset();
             gameState.current = gameState.getReady;
             break;
     }
