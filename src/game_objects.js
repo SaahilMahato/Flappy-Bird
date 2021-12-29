@@ -1,5 +1,6 @@
-// below classes contains the coordinates and size of all assets as their attributes in sprite.png
-// also contains a draw method that draws it in the canvas
+/*below classes contains the coordinates and size of all assets as their attributes in sprite.png
+ also contains a draw method, update and other methods to render and update its state */
+// all numerical values were taken from figma on sprite.png
 
 class BackGround {
     constructor() {
@@ -235,9 +236,8 @@ class Pipes {
             let p = this.position[i];
 
             // Collision resolution
-            if (this.checkCollision(p)) {
+            if (this.checkCollision(p))
                 gameState.current = gameState.gameOver;
-            }
 
             p.x -= this.dx; // move pipe to the left
 
@@ -258,7 +258,7 @@ class Pipes {
 
 class ScoreBoard {
     constructor() {
-        this.highScore = parseInt(localStorage.getItem('highScore')) || 0; // Try getting score from local storage if not set to 0
+        this.highScore = parseInt(localStorage.getItem('highScore')) || 0; // Try getting score from local storage, if it's undefined then set to 0
         this.currentScore = 0;
     }
 

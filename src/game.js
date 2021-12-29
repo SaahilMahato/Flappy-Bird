@@ -3,7 +3,7 @@ const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
 // game variables and constants
-let frames = 0;
+let frames = 0; // used for spawing pipes and bird animation
 
 // load sprite beofre. loading it during animation will cause performance issues
 const sprite = new Image();

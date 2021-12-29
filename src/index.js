@@ -1,4 +1,3 @@
-const initializer = document.querySelector('.initializer');
 const startButton = document.getElementById('start-button');
 
 startButton.addEventListener('click', () => {
