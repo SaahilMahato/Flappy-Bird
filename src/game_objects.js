@@ -118,7 +118,11 @@ class Bird {
 
     update = () => {
         // flapTime means the number of frames it takes before the bird flaps its wings
-        this.flapTime = gameState.current === gameState.getReady ? 50: 25; // set flapTime based on game state
+        if (gameState.current === gameState.game)
+            this.flapTime = 25; // set flapTime based on game state
+        else 
+            this.flapTime = 0;
+
         if (frames % this.flapTime === 0) // increment imageFrame index once a flaptime passes
             this.imageFrame += 1
         this.imageFrame = this.imageFrame % this.animationArray.length; // make sure imageFrame never exceeds animation array index
