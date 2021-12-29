@@ -5,8 +5,8 @@ class BackGround {
     constructor() {
         this.spriteX = 0;
         this.spriteY = 0;
-        this.w = 275;
-        this.h = 226;
+        this.width = 275;
+        this.height = 226;
         this.x = 0;
         this.y = canvas.height - 226;
     }
@@ -14,8 +14,8 @@ class BackGround {
     draw = () => {
         // repeatedly draw to fill the viewport
         for (let i = 0; i < 3; i++)
-            ctx.drawImage(sprite, this.spriteX, this.spriteY, this.w, this.h, this.x + i * this.w, 
-                this.y, this.w, this.h);
+            ctx.drawImage(sprite, this.spriteX, this.spriteY, this.width, this.height, this.x + i * this.width, 
+                this.y, this.width, this.height);
     }
 }
 
@@ -23,8 +23,8 @@ class ForeGround {
     constructor() {
         this.spriteX = 276;
         this.spriteY = 0;
-        this.w = 224;
-        this.h = 112;
+        this.width = 224;
+        this.height = 112;
         this.x = 0;
         this.y = canvas.height - 112;
         this.dx = 2;
@@ -33,14 +33,14 @@ class ForeGround {
     draw = () => {
         // repeatedly draw to fill the viewport
         for (let i = 0; i < 4; i++)
-            ctx.drawImage(sprite, this.spriteX, this.spriteY, this.w, this.h, this.x + i * this.w, 
-                this.y, this.w, this.h);
+            ctx.drawImage(sprite, this.spriteX, this.spriteY, this.width, this.height, this.x + i * this.width, 
+                this.y, this.width, this.height);
 
     }
 
     update = () => {
         if (gameState.current === gameState.game) {
-            this.x = (this.x - this.dx) % (this.w / 2); // restore foreground position after
+            this.x = (this.x - this.dx) % (this.width / 2); // restore foreground position after
         }
     }
 }
@@ -49,16 +49,16 @@ class GetReady {
     constructor() {
         this.spriteX = 0;
         this.spriteY = 228;
-        this.w = 173;
-        this.h = 152;
+        this.width = 173;
+        this.height = 152;
         this.x = canvas.width/2 - 173/2;
         this.y = 80;
     }
 
     draw = () => {
         if (gameState.current === gameState.getReady)
-            ctx.drawImage(sprite, this.spriteX, this.spriteY, this.w, this.h, this.x, 
-                this.y, this.w, this.h);
+            ctx.drawImage(sprite, this.spriteX, this.spriteY, this.width, this.height, this.x, 
+                this.y, this.width, this.height);
     }
 }
 
@@ -66,16 +66,16 @@ class GameOver {
     constructor() {
         this.spriteX = 175;
         this.spriteY = 228;
-        this.w = 225;
-        this.h = 202;
+        this.width = 225;
+        this.height = 172;
         this.x = canvas.width/2 - 225/2;
         this.y = 80;
     }
 
     draw = () => {
         if (gameState.current === gameState.gameOver)
-            ctx.drawImage(sprite, this.spriteX, this.spriteY, this.w, this.h, this.x, 
-                this.y, this.w, this.h);
+            ctx.drawImage(sprite, this.spriteX, this.spriteY, this.width, this.height, this.x, 
+                this.y, this.width, this.height);
     }
 }
 
@@ -94,8 +94,8 @@ class Bird {
         ],
         this.x = 50;
         this.y = canvas.height / 2 - 50;
-        this.w = 34;
-        this.h = 26;
+        this.width = 34;
+        this.height = 26;
         this.imageFrame = 0;
         this.gravity = 0.05; // tuned by hit and trial
         this.jump = 2.0; // tuned by hit and trial
@@ -110,8 +110,8 @@ class Bird {
         ctx.translate(this.x, this.y); // translate context to postion of the bird
         ctx.rotate(this.rotation); // rotate context
         ctx.drawImage(sprite, birdState.spriteX, birdState.spriteY,
-            this.w, this.h, - this.w/2, 
-            - this.h/2, this.w, this.h);
+            this.width, this.height, - this.width/2, 
+            - this.height/2, this.width, this.height);
         ctx.restore(); // restore context state
     }
 
@@ -130,8 +130,8 @@ class Bird {
             this.speed += this.gravity; // increment speed by gravity per frame
             this.y += this.speed; // increment y by speed per frame
 
-            if (this.y + this.h/2 >= canvas.height - 112) { // check if the bird touches the ground. 112 is height of ground
-                this.y = canvas.height - 112 - this.h/2; // make the bird keep touching the ground
+            if (this.y + this.height/2 >= canvas.height - 112) { // check if the bird touches the ground. 112 is height of ground
+                this.y = canvas.height - 112 - this.height/2; // make the bird keep touching the ground
                 if (gameState.current === gameState.game) {
                     gameState.current = gameState.gameOver; // end game
                 }
@@ -163,8 +163,8 @@ class Pipes {
         this.position = []; // stores x position of the pipes
         this.topPipe = { spriteX: 553, spriteY: 0 }; // coordiante of top pipe in the sprite
         this.bottomPipe = { spriteX: 502, spriteY: 0}; // coordiante of bottom pipe in the sprite
-        this.w = 53;
-        this.h = 400;
+        this.width = 53;
+        this.height = 400;
         this.gap = 150; // gap between top pipe and bottom pipe 
         this.dx = 2; // speed of pipe
         this.minYPosition = -150; // minimum y position of top pipe
@@ -175,17 +175,17 @@ class Pipes {
             let p = this.position[i];
 
             let topYPosition = p.y; // postion of top pipe
-            let bottomYPosition = p.y + this.h + this.gap; // position of bottom pipe = length of top pipe + gap
+            let bottomYPosition = p.y + this.height + this.gap; // position of bottom pipe = length of top pipe + gap
 
             // draw top tipe
             ctx.drawImage(sprite, this.topPipe.spriteX, this.topPipe.spriteY,
-                this.w, this.h, p.x, 
-                topYPosition, this.w, this.h);
+                this.width, this.height, p.x, 
+                topYPosition, this.width, this.height);
 
             // draw bottom tipe
             ctx.drawImage(sprite, this.bottomPipe.spriteX, this.bottomPipe.spriteY,
-                this.w, this.h, p.x, 
-                bottomYPosition, this.w, this.h);
+                this.width, this.height, p.x, 
+                bottomYPosition, this.width, this.height);
         }
     }
 
@@ -203,19 +203,19 @@ class Pipes {
 
     checkCollision = (p) => {
         if (gameState.current !== gameState.game) return;
-        let bottomPipeYPosition = p.y + this.h + this.gap;
+        let bottomPipeYPosition = p.y + this.height + this.gap;
         return (
             ( // check for top pipe
                 bird.x + bird.radius > p.x &&
-                bird.x - bird.radius < p.x + this.w &&
+                bird.x - bird.radius < p.x + this.width &&
                 bird.y + bird.radius > p.y &&
-                bird.y - bird.radius < p.y + this.h
+                bird.y - bird.radius < p.y + this.height
             ) ||
             ( // check for bottom pipe
                 bird.x + bird.radius > p.x &&
-                bird.x - bird.radius < p.x + this.w &&
+                bird.x - bird.radius < p.x + this.width &&
                 bird.y + bird.radius > bottomPipeYPosition &&
-                bird.y - bird.radius < bottomPipeYPosition + this.h
+                bird.y - bird.radius < bottomPipeYPosition + this.height
             )
         );
     }
@@ -233,7 +233,7 @@ class Pipes {
 
             p.x -= this.dx; // move pipe to the left
 
-            if (p.x + this.w <= 0) { // if pipe crossed left of viewport
+            if (p.x + this.width <= 0) { // if pipe crossed left of viewport
                 this.position.shift(); // shits array to the left by 1. basically deletes first element
                 scoreBoard.currentScore++;
                 scoreBoard.highScore = Math.max(scoreBoard.currentScore, scoreBoard.highScore);
@@ -258,13 +258,12 @@ class ScoreBoard {
         ctx.fillStyle = 'white';
 
         if (gameState.current === gameState.game) {
-            ctx.lineWidth = 2;
-            ctx.font = '35px Teko';
+            ctx.font = '35px comic-sans';
             ctx.fillText(this.currentScore, canvas.width/2, 50);
             ctx.strokeText(this.currentScore, canvas.width/2, 50);
         }
         else if (gameState.current === gameState.gameOver) {
-            ctx.font = '25px Teko';
+            ctx.font = '25px comic-sans';
             ctx.fillText(this.currentScore,  460, 175);
             ctx.strokeText(this.currentScore, 460, 175);
             ctx.fillText(this.highScore, 465, 215);

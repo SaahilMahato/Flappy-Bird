@@ -35,10 +35,6 @@ canvas.addEventListener('click', (e) => {
             bird.flap();
             break;
         case gameState.gameOver:
-            pipes.reset();
-            bird.reset();
-            scoreBoard.reset();
-            gameState.current = gameState.getReady;
             break;
     }
 });
@@ -69,5 +65,3 @@ const gameLoop = () => {
 
     requestAnimationFrame(gameLoop);
 }
-
-gameLoop();
