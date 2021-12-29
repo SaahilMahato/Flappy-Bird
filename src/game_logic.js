@@ -97,8 +97,8 @@ class Bird {
         this.width = 34;
         this.height = 26;
         this.imageFrame = 0;
-        this.gravity = 0.05; // tuned by hit and trial
-        this.jump = 2.0; // tuned by hit and trial
+        this.gravity = 0.07; // tuned by hit and trial
+        this.jump = 2.5; // tuned by hit and trial
         this.speed = 0;
         this.rotation = 0;
         this.radius = 12;
@@ -259,8 +259,8 @@ class ScoreBoard {
 
         if (gameState.current === gameState.game) {
             ctx.font = '35px comic-sans';
-            ctx.fillText(this.currentScore, canvas.width/2, 50);
-            ctx.strokeText(this.currentScore, canvas.width/2, 50);
+            ctx.fillText('SCORE: ' + this.currentScore, canvas.width/2 -100, 50); // apply text
+            ctx.strokeText('SCORE: ' + this.currentScore, canvas.width/2 -100, 50); // apply text style
         }
         else if (gameState.current === gameState.gameOver) {
             ctx.font = '25px comic-sans';

@@ -3,3 +3,22 @@
     display: block;
     margin: 0 auto;
 }
+
+.initializer {
+    font-size: 24px;
+    text-align: center;
+    width: 800px;
+    margin: 10px auto;
+    padding: 1%;
+    background-color: yellow;
+}
+
+#start-button {
+    font-size: 24px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}

@@ -8,6 +8,8 @@ startButton.addEventListener('click', () => {
         scoreBoard.reset();
         gameState.current = gameState.getReady;
     }
-    else
+    else if (gameState.current === -1) {
+        gameState.current = gameState.getReady;
         gameLoop();
+    }
 });

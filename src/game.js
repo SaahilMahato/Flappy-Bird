@@ -20,7 +20,7 @@ const scoreBoard = new ScoreBoard();
 
 // control game state
 const gameState = {
-    current: 0,
+    current: -1, // no state before initialization
     getReady: 0,
     game: 1,
     gameOver: 2
