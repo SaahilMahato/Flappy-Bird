@@ -33,10 +33,10 @@ canvas.addEventListener('click', (e) => {
             bird.flap();
             break;
         case gameState.gameOver:
-            gameState.current = gameState.gameOver;
+            gameState.current = gameState.getReady;
             break;
     }
-})
+});
 
 const draw = () => {
     ctx.fillStyle = 'skyblue';
@@ -49,7 +49,7 @@ const draw = () => {
 }
 
 const update = () => {
-
+    bird.update();
 }
 
 const gameLoop = () => {

@@ -89,17 +89,45 @@ class Bird {
         this.y = canvas.height / 2 - 50;
         this.w = 34;
         this.h = 26;
-        this.frame = 0;
+        this.imageFrame = 0;
+        this.gravity = 0.1; // tuned by hit and trial
+        this.jump = 2.0; // tuned by hit and trial
+        this.speed = 0;
     }
 
     draw = () => {
-        let birdState = this.animationArray[this.frame]; // change bird image based on frame to animate
+        let birdState = this.animationArray[this.imageFrame]; // change bird image based on frame to animate
         ctx.drawImage(sprite, birdState.sX, birdState.sY,
             this.w, this.h, this.x - this.w/2, 
             this.y - this.h/2, this.w, this.h);
     }
 
-    flap = () => {
+    update = () => {
+        // flapTime means the number of frames it takes before the bird flaps its wings
+        this.flapTime = gameState.current === gameState.getReady ? 50: 25; // set flapTime based on game state
+        if (frames % this.flapTime === 0) // increment imageFrame index once a flaptime passes
+            this.imageFrame += 1
+        this.imageFrame = this.imageFrame % this.animationArray.length; // make sure imageFrame never exceeds animation array index
 
+        if (gameState.current === gameState.getReady) { // if gameState rady reset the bird position and speed
+            this.y = canvas.height / 2 - 50;
+            this.speed = 0;
+        }
+        else {
+            this.speed += this.gravity; // increment speed by gravity per frame
+            this.y += this.speed; // increment y by speed per frame
+
+            if (this.y + this.h/2 >= canvas.height - 112) { // check if the bird touches the ground. 112 is height of ground
+                this.y = canvas.height - 112 - this.h/2; // make the bird keep touching the ground
+                if (gameState.current === gameState.game) {
+                    gameState.current = gameState.gameOver; // end game
+                }
+            }
+
+        }
+    }
+
+    flap = () => {
+        this.speed = - this.jump;
     }
 }
