@@ -40,9 +40,8 @@ class ForeGround {
     }
 
     update = () => {
-        if (gameState.current === gameState.game) {
+        if (gameState.current === gameState.game)
             this.x = (this.x - this.dx) % (this.width / 2); // restore foreground position after it has crossed half of viewport
-        }
     }
 }
 
@@ -138,9 +137,8 @@ class Bird {
 
             if (this.y + this.height/2 >= canvas.height - 112) { // check if the bird touches the ground. 112 is height of ground
                 this.y = canvas.height - 112 - this.height/2; // make the bird keep touching the ground
-                if (gameState.current === gameState.game) {
+                if (gameState.current === gameState.game)
                     gameState.current = gameState.gameOver; // end game
-                }
             }
 
             if (this.speed >= this.jump) {
@@ -212,6 +210,7 @@ class Pipes {
 
     checkCollision = (p) => {
         if (gameState.current !== gameState.game) return;
+
         let bottomPipeYPosition = p.y + this.height + this.gap;
         return (
             ( // check for top pipe
@@ -232,6 +231,7 @@ class Pipes {
     // move and deletes pipes if crossed left of canvas
     update = () => {
         if (gameState.current !== gameState.game) return;
+        
         for (let i = 0; i < this.position.length; i++) {
             let p = this.position[i];
 
@@ -245,7 +245,6 @@ class Pipes {
                 this.position.shift(); // shits array to the left by 1. basically deletes first element
                 scoreBoard.currentScore++; // increase score if pipe is deleted
                 scoreBoard.highScore = Math.max(scoreBoard.currentScore, scoreBoard.highScore); // set high score to max of current score and high score
-                localStorage.setItem('highScore', scoreBoard.highScore); // save high score to local storage
             }
         }
     }
@@ -258,7 +257,7 @@ class Pipes {
 
 class ScoreBoard {
     constructor() {
-        this.highScore = parseInt(localStorage.getItem('highScore')) || 0; // Try getting score from local storage, if it's undefined then set to 0
+        this.highScore = 0; // Try getting score from local storage, if it's undefined then set to 0
         this.currentScore = 0;
     }
 
