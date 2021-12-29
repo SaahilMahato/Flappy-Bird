@@ -26,6 +26,7 @@ const gameState = {
     gameOver: 2
 }
 
+// perform after click
 canvas.addEventListener('click', (e) => {
     switch (gameState.current) {
         case gameState.getReady:
@@ -34,11 +35,10 @@ canvas.addEventListener('click', (e) => {
         case gameState.game:
             bird.flap();
             break;
-        case gameState.gameOver:
-            break;
     }
 });
 
+// draw objects
 const draw = () => {
     ctx.fillStyle = 'skyblue';
     ctx.fillRect(0, 0, canvas.clientWidth, canvas.height);
@@ -51,6 +51,7 @@ const draw = () => {
     scoreBoard.draw();
 }
 
+// update update positions and animations
 const update = () => {
     bird.update();
     foreGround.update();
@@ -58,10 +59,10 @@ const update = () => {
     pipes.update();
 }
 
+// game loop that runs the game
 const gameLoop = () => {
     update();
     draw();
     frames++;
-
     requestAnimationFrame(gameLoop);
 }

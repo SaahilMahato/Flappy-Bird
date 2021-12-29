@@ -40,7 +40,7 @@ class ForeGround {
 
     update = () => {
         if (gameState.current === gameState.game) {
-            this.x = (this.x - this.dx) % (this.width / 2); // restore foreground position after
+            this.x = (this.x - this.dx) % (this.width / 2); // restore foreground position after it has crossed half of viewport
         }
     }
 }
