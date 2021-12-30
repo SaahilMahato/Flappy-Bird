@@ -233,15 +233,15 @@ class Pipes {
         if (gameState.current !== gameState.game) return;
         
         for (let i = 0; i < this.position.length; i++) {
-            let p = this.position[i];
+            let pipe = this.position[i];
 
             // Collision resolution
-            if (this.checkCollision(p))
+            if (this.checkCollision(pipe))
                 gameState.current = gameState.gameOver;
 
-            p.x -= this.dx; // move pipe to the left
+            pipe.x -= this.dx; // move pipe to the left
 
-            if (p.x + this.width <= 0) { // if pipe crossed left of viewport
+            if (pipe.x + this.width <= 0) { // if pipe crossed left of viewport
                 this.position.shift(); // shits array to the left by 1. basically deletes first element
                 scoreBoard.currentScore++; // increase score if pipe is deleted
                 scoreBoard.highScore = Math.max(scoreBoard.currentScore, scoreBoard.highScore); // set high score to max of current score and high score
